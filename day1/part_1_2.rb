@@ -15,10 +15,8 @@ class Solutnion
                 }
             }
         }
-
     end
-
+    
 end
-
 
 Solutnion.load
