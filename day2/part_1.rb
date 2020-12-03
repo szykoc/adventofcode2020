@@ -1,31 +1,15 @@
 input_arr = File.read("input.txt").split("\n")
 
-MIN_OCCUR_IDX = 0
-MAX_OCCUR_IDX = 1
-TEST_CHAR_IDX = 2
-
-valid_passwords = 0
-
-input_arr.map{|line| 
+valid_passowrds = input_arr.count do |line| 
     arr = line.split(":")
     delimeters = ['-', ' ']
-    policy = arr[0].split(Regexp.union(delimeters))
+    min, max, letter = arr[0].split(Regexp.union(delimeters))
     password = arr[1].strip
    
-    occ = 0
-    password.each_char {|c| 
-        if c == policy[TEST_CHAR_IDX]
-            occ += 1
-        end
-    }
+    letter_count = password.count(letter)
    
-    if policy[MIN_OCCUR_IDX].to_i <= occ && policy[MAX_OCCUR_IDX].to_i >= occ
-       valid_passwords += 1
-       p "valid accoding to password policy: #{policy[0]} - #{policy[1]} - #{policy[2]} - password : #{password}"
-    else
-        p "not valid accoding to password policy: #{policy[0]} - #{policy[1]} - #{policy[2]} - password : #{password}"  
-    end
-    
-}
+    letter_count >= min.to_i && letter_count <= max.to_i
 
-p valid_passwords
+end
+
+p valid_passowrds
