@@ -1,13 +1,21 @@
-input_arr = File.read("input.txt").split("\n")
+class Day3
+	attr_reader :input
 
-firstIdx = 3
+	def initialize(input)
+		@input = input
+	end
 
-trees = input_arr.drop(1).count do |line| 
-    tree = line[firstIdx % line.length] == '#'
-    firstIdx += 3
-    tree
+
+	def caluclateObstacles(start_position, sloopes)
+		@input.drop(1).count do |line| 
+		    tree = line[start_position % line.length] == '#'
+		    start_position += sloopes
+		    tree
+		end
+	end
+
 end
 
-p trees
+
 
 
