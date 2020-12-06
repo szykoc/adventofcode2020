@@ -2,8 +2,12 @@
 
 require_relative 'part1'
 
-input = ARGF.lines.map(&:strip).split
+input = ARGF.lines.map(&:strip)
 
 day4 = Day4.new(input)
 
-day4.test
+valid_passorts = day4.validate_passports
+
+p valid_passorts.length
+
+day4.validate_passport_data
