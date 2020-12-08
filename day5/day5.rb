@@ -1,45 +1,46 @@
 class Day5
 
-	attr_reader :input_data, :intial_size, :seats_arr
+	attr_reader :input_data
 
 	def initialize(input_data)
 		@input_data = input_data.split("\n")
-		@seats_arr = (0..127).to_a
-		@intial_size = @seats_arr.length
 	end
 
-	# FBFBBFFRLR
+	def find_seat()
+		row, column = Array.new
 
-  # => Start by considering the whole range, rows 0 through 127.
-  # => F means to take the lower half, keeping rows 0 through 63.
-  # => B means to take the upper half, keeping rows 32 through 63.
-  # => F means to take the lower half, keeping rows 32 through 47.
-  # => B means to take the upper half, keeping rows 40 through 47.
-  # => B keeps rows 44 through 47.
-  # => F keeps rows 44 through 45.
-  # => The final F keeps the lower of the two, row 44.
+		res = Array.new(0)
 
-	def show_data() 
-		@input_data.each {|l| p l}
-	end
-
-	def findSeat()
 		@input_data.each {|boading_pass| 
+
+			seats_row_arr = (0..127).to_a
+			seats_column_arr = (0..7).to_a
+
 			boading_pass
 				.chars
 				.each {|c|
+					len = seats_row_arr.length
+					len_c = seats_column_arr.length
 					case c
 						when 'F'
-							arr = first_half(@seats_arr, @intial_size)
+							seats_row_arr = first_half(seats_row_arr, len)
 						when 'B'
-							arr = second_half(@seats_arr, @intial_size)
+							seats_row_arr = second_half(seats_row_arr, len)
+						when 'L'
+							seats_column_arr = first_half(seats_column_arr, len_c)
+						when 'R'
+							seats_column_arr = second_half(seats_column_arr, len_c)
 					end
-					@intial_size = arr.length
-					@seats_arr = arr
-					p intial_size
-					p arr 					 	 					 
 				}
+		
+			res << seats_row_arr.first * 8 + seats_column_arr.first
+			
 		}
+
+		min, max = res.minmax
+		p (min..max).sum - res.inject(:+)
+		p res.max {|a, b| a <=> b}
+		
 	end
 
 
